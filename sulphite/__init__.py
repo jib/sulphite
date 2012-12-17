@@ -129,9 +129,10 @@ class Sulphite(object):
             if self.graphite_suffix:
                 message += '.' + self.graphite_suffix
 
-            message = "%s 1 %s" % ( message, int(time.time()) )
+            ### new line is required or graphite will silently discard the metric.
+            message = "%s 1 %s\n" % ( message, int(time.time()) )
 
-            #self._debug( message )
+            self._debug( "Sending to graphite: %s" % message )
 
             sock.send( message )
             sock.close()
